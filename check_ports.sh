@@ -47,6 +47,12 @@ do
     host="${fields[1]}"
     ports="${fields[2]}"
 
+    # 使用ping命令檢查主機名稱是否可以解析成IP地址
+    if ! ping -c 1 "$host" >/dev/null 2>&1; then
+        echo "無法解析主機名稱 $host 到IP地址，請檢查名稱或DNS設定"
+        continue
+    fi
+
     # 分割端口列表
     IFS=',' read -r -a port_list <<< "$ports"
 
